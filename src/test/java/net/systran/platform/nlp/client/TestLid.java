@@ -12,7 +12,8 @@ import java.io.File;
 public class TestLid {
     public static LidApi getLidApi() {
         LidApi api = new LidApi();
-        api.getApiClient().setApiKey("8b287b9f-ced3-4d2b-b7fa-dad02fbea7f6");
+        // Replace xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx by your API_KEY
+        api.getApiClient().setApiKey("xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx");
         return api;
     }
 

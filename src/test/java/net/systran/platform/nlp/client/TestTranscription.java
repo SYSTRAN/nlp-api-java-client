@@ -14,7 +14,8 @@ import org.junit.Test;
 public class TestTranscription {
     public static TranscriptionApi getTranscriptionApi() {
         TranscriptionApi api = new TranscriptionApi();
-        api.getApiClient().setApiKey("8b287b9f-ced3-4d2b-b7fa-dad02fbea7f6");
+        // Replace xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx by your API_KEY
+        api.getApiClient().setApiKey("xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx");
         return api;
     }
 
