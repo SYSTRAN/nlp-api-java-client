@@ -139,6 +139,9 @@ public class ApiClient {
     throw new RuntimeException("No HTTP basic authentication configured!");
   }
 
+  /**
+   * Helper method to get the api key from a file location
+   */
   public static String LoadAPIKey(String filename) throws IOException {
     String apiKey;
     if (null == filename || 0 == filename.length())

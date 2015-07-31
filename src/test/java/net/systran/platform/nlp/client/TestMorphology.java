@@ -5,6 +5,7 @@ import net.systran.platform.nlp.client.auth.ApiKeyAuth;
 import net.systran.platform.nlp.client.model.MorphologyExtractLemmaResponse;
 import net.systran.platform.nlp.client.model.MorphologyExtractNPResponse;
 import net.systran.platform.nlp.client.model.MorphologyExtractPosResponse;
+import net.systran.platform.nlp.client.model.SupportedLanguagesResponse;
 import org.junit.Test;
 
 import java.io.File;
@@ -17,6 +18,14 @@ public class TestMorphology {
         String apiKey = ApiClient.LoadAPIKey(".//apiKey.txt");
         apiKeyAuth.setApiKey(apiKey);
         return new MorphologyApi(apc);
+    }
+
+    @Test
+    public void testMorphologySupportedLanguagesGet() throws ApiException, IOException {
+        MorphologyApi api = MorphologyApi();
+
+        SupportedLanguagesResponse supportedLanguagesResponse = api.nlpMorphologySupportedLanguagesGet(null);
+        System.out.println(supportedLanguagesResponse.toString());
     }
 
     @Test
