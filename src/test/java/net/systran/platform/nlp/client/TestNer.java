@@ -1,21 +1,24 @@
 package net.systran.platform.nlp.client;
 
 import net.systran.platform.nlp.client.api.NerApi;
+import net.systran.platform.nlp.client.auth.ApiKeyAuth;
 import net.systran.platform.nlp.client.model.*;
 import org.junit.Test;
 
 import java.io.File;
+import java.io.IOException;
 
 public class TestNer {
-    public static NerApi getNerApi() {
-        NerApi api = new NerApi();
-        // Replace xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx by your API_KEY
-        api.getApiClient().setApiKey("xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx");
-        return api;
+    public static NerApi getNerApi() throws IOException {
+        ApiClient apc = new ApiClient();
+        ApiKeyAuth apiKeyAuth = (ApiKeyAuth) apc.getAuthentication("apiKey");
+        String apiKey = ApiClient.LoadAPIKey(".//apiKey.txt");
+        apiKeyAuth.setApiKey(apiKey);
+        return new NerApi(apc);
     }
 
     @Test
-    public void testNerExtractEntity() throws ApiException {
+    public void testNerExtractEntity() throws ApiException, IOException {
         NerApi api = getNerApi();
 
         String lang = "en";
@@ -31,7 +34,7 @@ public class TestNer {
     }
 
     @Test
-    public void testNerExtractEntityWithInputFile() throws ApiException {
+    public void testNerExtractEntityWithInputFile() throws ApiException, IOException {
         NerApi api = getNerApi();
 
         String lang = "en";
@@ -44,7 +47,7 @@ public class TestNer {
     }
 
     @Test
-    public void testNerExtractAnnotation() throws ApiException {
+    public void testNerExtractAnnotation() throws ApiException, IOException {
         NerApi api = getNerApi();
 
         String lang = "en";
@@ -62,7 +65,7 @@ public class TestNer {
     }
 
     @Test
-    public void testNerExtractAnnotationWithInputFile() throws ApiException {
+    public void testNerExtractAnnotationWithInputFile() throws ApiException, IOException {
         NerApi api = getNerApi();
 
         String lang = "en";

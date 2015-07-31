@@ -32,7 +32,7 @@ import com.sun.jersey.multipart.FormDataMultiPart;
 import javax.ws.rs.core.Response.Status.Family;
 import javax.ws.rs.core.MediaType;
 
-import java.io.InputStream;
+import java.io.*;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
@@ -43,9 +43,6 @@ import java.util.Date;
 import java.util.TimeZone;
 
 import java.net.URLEncoder;
-
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -65,7 +62,7 @@ public class ApiClient {
   private Map<String, Client> hostMap = new HashMap<String, Client>();
   private Map<String, String> defaultHeaderMap = new HashMap<String, String>();
   private boolean debugging = false;
-  private String basePath = "https://platformapi-stag.systran.net:8904";
+  private String basePath = "https://api-platform-stag.systran.net:8904";
 
   private Map<String, Authentication> authentications;
 
@@ -140,6 +137,27 @@ public class ApiClient {
       }
     }
     throw new RuntimeException("No HTTP basic authentication configured!");
+  }
+
+  public static String LoadAPIKey(String filename) throws IOException {
+    String apiKey;
+    if (null == filename || 0 == filename.length())
+      throw new IllegalArgumentException("Empty API key file specified.");
+
+    File file = new File(filename);
+    FileInputStream fis = new FileInputStream(file);
+
+    BufferedReader breader = new BufferedReader(new InputStreamReader(fis));
+
+    apiKey = breader.readLine().replaceAll("\\n", "").replaceAll("\\r", "");
+
+    fis.close();
+    breader.close();
+
+    if (null == apiKey || apiKey.length() < 10)
+      throw new IllegalArgumentException("Too short API key.");
+
+    return apiKey;
   }
 
   /**

@@ -1,13 +1,17 @@
-# NLP API Java Client
+# Systran Natural Language Processing Java SDK.
+This is a Java implementation of the [Systran Natural Language Processing](https://api-platform-stag.systran.net/reference/nlp) SDK.
+This client is a standard Maven project.
 
 ## Compile
 
 ```
-mvn package
+$ mvn compile
 ```
 
 ## Test
 
 ```
-mvn test
+// Copy your api key into "apiKey.txt" file
+$ echo YOUR_API_KEY > apiKey.txt
+$ mvn test
 ```

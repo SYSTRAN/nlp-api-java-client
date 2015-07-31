@@ -1,6 +1,7 @@
 package net.systran.platform.nlp.client;
 
 import net.systran.platform.nlp.client.api.LidApi;
+import net.systran.platform.nlp.client.auth.ApiKeyAuth;
 import net.systran.platform.nlp.client.model.LidDetectedLanguage;
 import net.systran.platform.nlp.client.model.LidDocumentResponse;
 import net.systran.platform.nlp.client.model.LidParagraph;
@@ -8,17 +9,19 @@ import net.systran.platform.nlp.client.model.LidParagraphResponse;
 import org.junit.Test;
 
 import java.io.File;
+import java.io.IOException;
 
 public class TestLid {
-    public static LidApi getLidApi() {
-        LidApi api = new LidApi();
-        // Replace xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx by your API_KEY
-        api.getApiClient().setApiKey("xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx");
-        return api;
+    public static LidApi getLidApi() throws IOException {
+        ApiClient apc = new ApiClient();
+        ApiKeyAuth apiKeyAuth = (ApiKeyAuth) apc.getAuthentication("apiKey");
+        String apiKey = ApiClient.LoadAPIKey(".//apiKey.txt");
+        apiKeyAuth.setApiKey(apiKey);
+        return new LidApi(apc);
     }
 
     @Test
-    public void testDocumentLid() throws ApiException {
+    public void testDocumentLid() throws ApiException, IOException {
         LidApi api = getLidApi();
 
         String input = "Bodies from the MH17 crash are being kept on this train, as Natalia Antelava reports Pro-Russian rebels have allowed Dutch investigators to examine bodies from the crashed Malaysia Airlines plane at a railway station in eastern Ukraine.";
@@ -30,7 +33,7 @@ public class TestLid {
     }
 
     @Test
-    public void testDocumentLidWithInputFile() throws ApiException {
+    public void testDocumentLidWithInputFile() throws ApiException, IOException {
         LidApi api = getLidApi();
 
         File inputFile = new File(".//src//test//java//net//systran//platform//nlp//client//lid_document.txt");
@@ -42,7 +45,7 @@ public class TestLid {
     }
 
     @Test
-    public void testParagraphLid() throws ApiException {
+    public void testParagraphLid() throws ApiException, IOException {
         LidApi api = getLidApi();
 
         String input = "Bodies from the MH17 crash are being kept on this train, as Natalia Antelava reports\n" +
@@ -63,7 +66,7 @@ public class TestLid {
     }
 
     @Test
-    public void testParagraphLidWithInputFile() throws ApiException {
+    public void testParagraphLidWithInputFile() throws ApiException, IOException {
         LidApi api = getLidApi();
 
         File inputFile = new File(".//src//test//java//net//systran//platform//nlp//client//lid_paragraph.txt");

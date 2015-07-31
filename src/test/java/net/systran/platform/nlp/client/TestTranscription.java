@@ -2,6 +2,7 @@ package net.systran.platform.nlp.client;
 
 
 import net.systran.platform.nlp.client.api.TranscriptionApi;
+import net.systran.platform.nlp.client.auth.ApiKeyAuth;
 import net.systran.platform.nlp.client.model.TranscriptionSupportedLanguagesResponse;
 
 import java.io.File;
@@ -12,15 +13,16 @@ import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 
 public class TestTranscription {
-    public static TranscriptionApi getTranscriptionApi() {
-        TranscriptionApi api = new TranscriptionApi();
-        // Replace xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx by your API_KEY
-        api.getApiClient().setApiKey("xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx");
-        return api;
+    public static TranscriptionApi getTranscriptionApi() throws IOException {
+        ApiClient apc = new ApiClient();
+        ApiKeyAuth apiKeyAuth = (ApiKeyAuth) apc.getAuthentication("apiKey");
+        String apiKey = ApiClient.LoadAPIKey(".//apiKey.txt");
+        apiKeyAuth.setApiKey(apiKey);
+        return new TranscriptionApi(apc);
     }
 
     @Test
-    public void testTranscriptionSupportedLanguages() throws ApiException {
+    public void testTranscriptionSupportedLanguages() throws ApiException, IOException {
         TranscriptionApi api = getTranscriptionApi();
         TranscriptionSupportedLanguagesResponse transcriptionSupportedLanguages = api.nlpTranscriptionSupportedLanguagesGet(null, null, null);
         System.out.println(transcriptionSupportedLanguages.toString());
